@@ -1,6 +1,6 @@
 namespace TokenAeIndexer.GraphQL;
 
-public class GetTransferRecordInput
+public class GetAccountNFTInput
 {
     public string ChainId { get; set; }
     public string Address { get; set; }
