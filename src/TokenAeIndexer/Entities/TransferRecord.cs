@@ -1,4 +1,5 @@
 using AeFinder.Sdk.Entities;
+using AElf.Contracts.MultiToken;
 using Nest;
 
 namespace TokenAeIndexer.Entities;
@@ -9,5 +10,5 @@ public class TransferRecord: AeFinderEntity, IAeFinderEntity
     [Keyword] public string FromAddress { get; set; }
     [Keyword] public string ToAddress { get; set; }
     public long Amount { get; set; }
-    public ??? ExternalInfo { get; set; }
+    public ExternalInfo ExternalInfo { get; set; }
 }
