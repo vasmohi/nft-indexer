@@ -1,12 +1,13 @@
 using AElf.Contracts.MultiToken;
 using AeFinder.Sdk.Logging;
 using AeFinder.Sdk.Processor;
+using Newtonsoft.Json;
 using TokenAeIndexer.Entities;
 using Volo.Abp.DependencyInjection;
 
 namespace TokenAeIndexer.Processors;
 
-public class TokenTransferredProcessor : LogEventProcessorBase<Transferred>, ITransientDependency
+public class TokenTransferredProcessor : LogEventProcessorBase<Transferred>
 {
     public override string GetContractAddress(string chainId)
     {
@@ -20,6 +21,7 @@ public class TokenTransferredProcessor : LogEventProcessorBase<Transferred>, ITr
 
     public override async Task ProcessAsync(Transferred logEvent, LogEventContext context)
     {
+        Logger.LogDebug("TokenTransferredProcessor {A}",JsonConvert.SerializeObject(logEvent));
         var transfer = new TransferRecord
         {
             Id = $"{context.ChainId}-{context.Transaction.TransactionId}-{context.LogEvent.Index}",
@@ -29,7 +31,8 @@ public class TokenTransferredProcessor : LogEventProcessorBase<Transferred>, ITr
             Amount = logEvent.Amount
         };
         await SaveEntityAsync(transfer);
-        
+        Logger.LogDebug("TokenTransferredProcessor SaveEntityAsync {A}",JsonConvert.SerializeObject(transfer));
+
         await ChangeBalanceAsync(context.ChainId, logEvent.From.ToBase58(), logEvent.Symbol, -logEvent.Amount);
         await ChangeBalanceAsync(context.ChainId, logEvent.To.ToBase58(), logEvent.Symbol, logEvent.Amount);
     }

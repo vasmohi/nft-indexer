@@ -7,6 +7,7 @@ namespace TokenAeIndexer.GraphQL;
 
 public class Query
 {
+    [Name("getAccount")]
     public static async Task<List<AccountDto>> Account(
         [FromServices] IReadOnlyRepository<Account> repository,
         [FromServices] IObjectMapper objectMapper,
@@ -31,6 +32,7 @@ public class Query
         return objectMapper.Map<List<Account>, List<AccountDto>>(accounts);
     }
     
+    [Name("getTransferRecord")]
     public static async Task<List<TransferRecordDto>> TransferRecord(
         [FromServices] IReadOnlyRepository<TransferRecord> repository,
         [FromServices] IObjectMapper objectMapper,

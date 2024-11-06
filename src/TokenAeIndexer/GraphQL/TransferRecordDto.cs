@@ -9,5 +9,5 @@ public class TransferRecordDto : AeFinderEntityDto
     public string FromAddress { get; set; }
     public string ToAddress { get; set; }
     public long Amount { get; set; }
-    public ExternalInfo ExternalInfo { get; set; }
+    //public ExternalInfo ExternalInfo { get; set; }
 }
